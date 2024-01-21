@@ -1,0 +1,3 @@
+[submodule "UploadFiles"]
+	path = UploadFiles
+	url = https://github.com/edvardsanta/UploadFiles
