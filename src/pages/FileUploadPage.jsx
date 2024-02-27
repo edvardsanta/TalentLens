@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import FileInput from "../components/FileInput";
-import UploadButton from "../components/UploadButton";
-import FileList from "../components/FileUploadList";
-import FileUploadService from "../services/FileUploadService ";
+import FileInput from "@/components/FileInput";
+import UploadButton from "@/components/UploadButton";
+import FileList from "@/components/FileUploadList";
+import FileUploadService from "@/services/FileUploadService ";
 
 function FileUploadPage() {
   const MAX_FILES = import.meta.env.VITE_MAXFILES_UPLOAD || 10;
