@@ -3,11 +3,13 @@ import FileInput from "@/components/FileInput";
 import UploadButton from "@/components/UploadButton";
 import FileList from "@/components/FileUploadList";
 import FileUploadService from "@/services/FileUploadService ";
-
+import mockFileContents from "@/Mock/mockFileContents";
 function FileUploadPage() {
   const MAX_FILES = import.meta.env.VITE_MAXFILES_UPLOAD || 10;
   const [files, setFiles] = useState([]);
   const [uploadStatus, setUploadStatus] = useState([]);
+  // const [fileContents, setfileContents] = useState([]);
+  const [fileContents, setFileContents] = useState(mockFileContents);
   const [webSocket, setWebSocket] = useState(null);
   const FILESIZE_MAX = 10 * 1024 * 1024;
   useEffect(() => {
@@ -69,6 +71,7 @@ function FileUploadPage() {
   };
 
   const handleFileUpload = async () => {
+    console.log(fileContents)
     const validFiles = files.filter((f) => f.isValid);
     if (validFiles.length == 0) {
       return;
@@ -104,7 +107,11 @@ function FileUploadPage() {
     <div className="container mt-5">
       <h1 className="mb-4 text-center">File Upload Page</h1>
       <FileInput onFileChange={handleFileChange} />
-      <FileList files={files} uploadStatus={uploadStatus} />
+      <FileList
+        files={files}
+        uploadStatus={uploadStatus}
+        fileContents={fileContents}
+      />
       <UploadButton onUpload={handleFileUpload} />
     </div>
   );
