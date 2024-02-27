@@ -15,12 +15,14 @@ function LoginPage({ onLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would call your backend API to perform the login
     createAuth(credentials)
     console.log(credentials)
     navigate("/");
   };
 
+  const handleRegisterClick = () => {
+    navigate('/register'); 
+  };
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -54,6 +56,7 @@ function LoginPage({ onLogin }) {
                   />
                 </div>
                 <button type="submit" className="btn btn-primary">Login</button>
+                <button type="button" className="btn btn-secondary" onClick={handleRegisterClick}>Register</button>
               </form>
             </div>
           </div>
