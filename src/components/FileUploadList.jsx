@@ -1,49 +1,82 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { Tooltip } from 'react-tooltip';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheckCircle,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { Tooltip } from "react-tooltip";
+
 const FileList = ({ files, uploadStatus }) => {
   return (
-    <ul className="list-group mt-3">
-      {files.map((item, index) => (
-        <li key={index} className="list-group-item">
-          <div className="row align-items-center">
-            {/* File name column */}
-            <div className="col text-start">
-              {item.file.name}
-            </div>
+    <div className="accordion" id="fileAccordion">
+      {files.map((item, index) => {
+        const statusInfo = uploadStatus.find(
+          (u) => u.file.name === item.file.name
+        );
+        const statusClass = statusInfo?.isError
+          ? "bg-danger"
+          : statusInfo?.status === "Pending"
+          ? "bg-warning"
+          : "bg-success";
+        const targetId = `collapse-${index}`;
 
-            {/* Icon column
-              This represent the error in frontend
-            */}
-            <div className="col text-center">
-              {item.isValid ? (
-                <FontAwesomeIcon icon={faCheckCircle} className="text-success" />
-              ) : (
-                <>
-                  <FontAwesomeIcon 
-                    icon={faTimesCircle} 
-                    className="text-danger"
-                    data-tooltip-id={`error-tooltip-${index}`} 
-                    data-tooltip-content={item.errorMessage}
-                  />
-                  <Tooltip id={`error-tooltip-${index}`} />
-                </>
-              )}
-            </div>
+        return (
+          <div className="accordion-item" key={index}>
+            <h2 className="accordion-header" id={`heading-${index}`}>
+              {/* Clickable row */}
+              <button
+                className="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target={`#${targetId}`}
+                aria-expanded="false"
+                aria-controls={targetId}
+              >
+                <div className="row align-items-center w-100">
+                  {/* File name column */}
+                  <div className="col-md-8 text-start">{item.file.name}</div>
 
-            {/* Status column 
-               This represent the response error/success in backend
-            */}
-            <div className="col text-end">
-              <span className={`badge ${uploadStatus.find(u => u.file.name === item.file.name)?.isError ? 'bg-danger' : 'bg-success'} rounded-pill`}>
-                {uploadStatus.find(u => u.file.name === item.file.name)?.status || 'Pending'}
-              </span>
+                  {/* Validation and Upload Status */}
+                  <div className="col-md-4 text-end">
+                    {/* Validation Status */}
+                    {item.isValid ? (
+                      <FontAwesomeIcon
+                        icon={faCheckCircle}
+                        className="text-success me-2"
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faTimesCircle}
+                        className="text-danger me-2"
+                        data-tooltip-id={`error-tooltip-${index}`}
+                        data-tooltip-content={item.errorMessage}
+                      />
+                    )}
+                    <Tooltip id={`error-tooltip-${index}`} />
+                    {/* Upload Status */}
+                    <span className={`badge rounded-pill ${statusClass}`}>
+                      {statusInfo?.status}
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </h2>
+
+            {/* Accordion content */}
+            <div
+              id={targetId}
+              className="accordion-collapse collapse"
+              data-bs-parent="#fileAccordion"
+            >
+              {/* TODO: Create a table to render file infos */}
+              <div className="accordion-body">
+                Detailed information about {item.file.name}
+              </div>
             </div>
           </div>
-        </li>
-      ))}
-    </ul>
+        );
+      })}
+    </div>
   );
 };
 export default FileList;
