@@ -8,8 +8,8 @@ function FileUploadPage() {
   const MAX_FILES = import.meta.env.VITE_MAXFILES_UPLOAD || 10;
   const [files, setFiles] = useState([]);
   const [uploadStatus, setUploadStatus] = useState([]);
+  const [webSocket, setWebSocket] = useState(null);
   const FILESIZE_MAX = 10 * 1024 * 1024;
-  
   useEffect(() => {
     const ws = new WebSocket(import.meta.env.VITE_WEBSOCKET);
     setWebSocket(ws);
