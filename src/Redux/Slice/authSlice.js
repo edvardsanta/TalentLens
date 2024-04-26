@@ -1,17 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, logoutUser } from "../thunks/authThunks";
-const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
-  isLoggedIn: !!localStorage.getItem("user"),
-  role: JSON.parse(localStorage.getItem("user"))?.role || null,
-};
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { loginUser, logoutUser } from '../thunks/authThunks';
 
+const initialState = {
+  user: JSON.parse(localStorage.getItem('user')) || null,
+  isLoggedIn: !!localStorage.getItem('user'),
+  role: JSON.parse(localStorage.getItem('user'))?.role || null,
+};
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     resetAuthState(state) {
-      state.error = null;
+      state.error = null; // Reset any error states
     },
   },
   extraReducers: (builder) => {

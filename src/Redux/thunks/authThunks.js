@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authenticate } from "@/Mock/mockUsers";
+import authenticate from "@/Mock/mockUsers";
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",

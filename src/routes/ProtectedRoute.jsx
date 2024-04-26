@@ -1,15 +1,18 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../providers/AuthProvider';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import PropTypes from 'prop-types';
 
 const ProtectedRoute = ({ children }) => {
-  const user = useAuth();
-  console.log(user)
-  if (user == undefined || !user) {
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
+  if (!isLoggedIn) {
     return <Navigate to="/login" replace />;
   }
   return children;
 };
-
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ProtectedRoute;
