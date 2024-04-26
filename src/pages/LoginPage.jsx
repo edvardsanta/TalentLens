@@ -1,34 +1,49 @@
 import React, { useState } from "react";
-import { createAuth } from "@/providers/AuthProvider";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from '@/Redux/thunks/authThunks';
 
-function LoginPage({ onLogin }) {
+function LoginPage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
-  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createAuth(credentials);
-    console.log(credentials);
-    navigate("/");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setErrorMessage(""); 
+    dispatch(loginUser(credentials))
+      .unwrap()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        setErrorMessage("Check the username or password or register a new account.");
+      });
   };
 
   const handleRegisterClick = () => {
     navigate("/register");
   };
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card">
-            <h5 className="card-header">Login</h5>
-            <div className="card-body">
+            <h5 className="card-header login-header">Login</h5>
+            <div className="card-body login-form">
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">
@@ -58,18 +73,17 @@ function LoginPage({ onLogin }) {
                     required
                   />
                 </div>
-                <div className="d-flex justify-content-between">
-                  <button type="submit" className="btn btn-primary">
-                    Login
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={handleRegisterClick}
-                  >
-                    Register
-                  </button>
-                </div>
+                {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+                <button type="submit" className="btn btn-primary">
+                  Login
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleRegisterClick}
+                >
+                  Register
+                </button>
               </form>
             </div>
           </div>
