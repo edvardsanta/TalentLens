@@ -105,7 +105,6 @@ function FileUploadPage() {
 
   return (
     <div className="container mt-5">
-      <h1 className="mb-4 text-center">File Upload Page</h1>
       <FileInput onFileChange={handleFileChange} />
       <FileList
         files={files}
