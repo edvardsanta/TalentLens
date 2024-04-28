@@ -20,7 +20,8 @@ import './commands'
 // require('./commands')
 
 import { mount } from 'cypress/react18'
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 Cypress.Commands.add('mount', mount)
 
 // Example use:
