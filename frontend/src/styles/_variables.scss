@@ -1,0 +1,53 @@
+// Theme colors
+$prefix: bs-;
+
+$primary: #0e11c1;
+$primary-button-blue: rgb(30, 75, 198);
+$secondary: #64748b;
+$success: #1ba44d;
+$info: #0ea5e9;
+$warning: #eab308;
+$danger: #ef4444;
+$light: #f8fafc;
+$dark: #0f172a;
+
+$custom-colors: (
+  "primary-button-blue": $primary-button-blue,
+);
+
+// Options
+$enable-shadows: true;
+$enable-gradients: true;
+$enable-negative-margins: true;
+
+// Spacing
+$spacer: 1rem;
+
+// Body
+$body-bg: $light;
+$body-color: $dark;
+
+// Links
+$link-decoration: none;
+
+// Typography
+// $font-family-base: "Inter", system-ui, -apple-system, sans-serif;
+$font-size-base: 0.95rem;
+$line-height-base: 1.6;
+
+// Components
+$border-radius: 0.5rem;
+$border-radius-sm: 0.4rem;
+$border-radius-lg: 0.75rem;
+$border-width: 1px;
+
+// Navbar
+$navbar-padding-y: 1rem;
+$navbar-nav-link-padding-x: 1rem;
+$navbar-dark-color: rgba($light, 0.8);
+$navbar-dark-hover-color: rgba($light, 1);
+
+// Buttons
+$btn-padding-y: 0.6rem;
+$btn-padding-x: 1.2rem;
+$btn-font-weight: 500;

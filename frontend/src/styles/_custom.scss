@@ -1,0 +1,41 @@
+.navbar {
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .navbar-brand {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.btn {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.card {
+  border: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+}

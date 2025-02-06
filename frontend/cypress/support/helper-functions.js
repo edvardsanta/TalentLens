@@ -38,19 +38,16 @@ export const generateFileContents = (files) => {
     }));
 };
 
-
-
-
 export const generateRandomFile = () => ({
-  file: { name: chance.word() + '.txt' }, 
-  isValid: chance.bool(), 
-  errorMessage: chance.bool() ? chance.sentence() : null, 
+  file: { name: chance.word() + ".txt" },
+  isValid: chance.bool(),
+  errorMessage: chance.bool() ? chance.sentence() : null,
 });
 
 export const generateRandomStatusInfo = () => ({
   file: generateRandomFile().file,
-  status: chance.pickone(['Uploaded', 'Pending', 'Error']), 
-  isError: chance.bool(), 
+  status: chance.pickone(["Uploaded", "Pending", "Error"]),
+  isError: chance.bool(),
 });
 
 export const generateRandomIndex = () => chance.integer({ min: 0, max: 100 });

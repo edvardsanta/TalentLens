@@ -6,7 +6,7 @@ import jsdoc from "eslint-plugin-jsdoc";
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   jsdoc.configs["flat/recommended"],
-  { files: ["**/*.{js,mjs,cjs,jsx}"], ignores: ["**/*.cy.{js,jsx}"], },
+  { files: ["**/*.{js,mjs,cjs,jsx}"], ignores: ["**/*.cy.{js,jsx}"] },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   pluginReact.configs.flat.recommended,
