@@ -1,3 +1,6 @@
 [submodule "UploadFiles"]
 	path = UploadFiles
 	url = https://github.com/edvardsanta/UploadFiles
+[submodule "platform-service"]
+	path = platform-service
+	url = https://github.com/edvardsanta/TalentLensService
