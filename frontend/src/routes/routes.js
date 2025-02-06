@@ -29,6 +29,6 @@ export const routes = {
       path: "/file-viewer",
       component: FileViewerPage,
       title: "File Viewer",
-    }
+    },
   ],
 };
