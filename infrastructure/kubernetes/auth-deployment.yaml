@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform-service
+spec:
+  selector:
+    matchLabels:
+      app: platform-service
+  template:
+    metadata:
+      labels:
+        app: platform-service
+    spec:
+      containers:
+      - name: platform-service
+        image: platform-service
+        imagePullPolicy: Never  # Important for local images
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  platform-service:
+    build:
+      context: ../../platform-service
+      dockerfile: Dockerfile
+    container_name: platform_service
+    ports:
+      - "8080:8080"
+    networks:
+      - platform-network
+  # Frontend Service
+  frontend:
+    build:
+      context: ../../frontend/
+      dockerfile: Dockerfile
+    container_name: platform_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - platform-service
+    networks:
+      - platform-network
+
+networks:
+  platform-network:
+    driver: bridge
