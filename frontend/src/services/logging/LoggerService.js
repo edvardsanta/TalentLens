@@ -1,4 +1,4 @@
-import StandardError from "@/models/StandardError";
+/* eslint-disable no-console */
 class LoggerService {
   constructor() {
     this.isFileLogging = import.meta.env.VITE_USE_FILE_LOGGING === "true";
@@ -10,7 +10,7 @@ class LoggerService {
   /**
    * Logs an error and sends it to the configured error tracking and file logging services.
    * @param {Error} error - The error object to log.
-   * @param {StandardError} errorInfo - Additional information about the error, such as component stack trace.
+   * @param {object} errorInfo - Additional information about the error, such as component stack trace.
    */
   async logError(error, errorInfo) {
     const standardError = {
@@ -41,6 +41,32 @@ class LoggerService {
     // Always console.log in development
     if (import.meta.env.VITE_AMBIENT === "local") {
       console.error("Error logged:", standardError);
+    }
+  }
+
+  async logMetric(type, data) {
+    const metric = {
+      id: crypto.randomUUID(),
+      timestamp: Date.now(),
+      type,
+      data,
+      environment: import.meta.env.VITE_AMBIENT || "production",
+    };
+    if (this.isFileLogging) {
+      await this.writeToFile(metric);
+    }
+
+    if (this.isFileLogging) {
+      await this.writeToFile(metric);
+    }
+
+    if (this.errorTrackingEnabled) {
+      await this.sendToErrorTracking(metric);
+    }
+
+    // Always console.log in development
+    if (import.meta.env.VITE_AMBIENT === "local") {
+      console.log("Metrics logged:", metric);
     }
   }
 

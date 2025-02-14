@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import FileViewerPage from "../pages/FileViewerPage";
+import FileViewerPage from "@/pages/FileViewerPage";
 const preloadComponent = (importFn) => {
   const Component = lazy(importFn);
   Component.preload = importFn;

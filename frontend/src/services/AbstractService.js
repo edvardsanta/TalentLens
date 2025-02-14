@@ -1,6 +1,31 @@
+import { logger } from "./logging/LoggerService";
+
 class AbstractService {
   constructor() {
     this.baseUrl = import.meta.env.VITE_UPLOADFILES_API;
+  }
+  async getCsrfToken(token) {
+    const TOKEN_EXPIRATION_TIME = 15 * 60 * 1000; 
+    if (
+      this.csrfToken &&
+      this.lastTokenFetchTime &&
+      Date.now() - this.lastTokenFetchTime < TOKEN_EXPIRATION_TIME
+    ) {
+      return this.csrfToken;
+    }
+
+    const csrfResponse = await this.request("/auth/antiforgerytoken", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+    });
+
+    this.csrfToken = csrfResponse.token;
+    this.lastTokenFetchTime = Date.now();
+
+    return this.csrfToken;
   }
 
   async request(endpoint, options) {
@@ -14,13 +39,24 @@ class AbstractService {
       }
       return data;
     } catch (error) {
-      console.error("Request failed:", error);
+      logger.logError("Request failed:", {
+        error: error.message,
+        functionName: "request",
+        context: "AbstractService.request",
+        severity: "low",
+      });
       throw error;
     }
   }
 
-  get(endpoint) {
-    return this.request(endpoint, { method: "GET" });
+  get(endpoint, token) {
+    return this.request(endpoint, {
+      method: "GET",
+      headers: {
+        "X-XSRF-TOKEN": this.csrfToken,
+        Authorization: `Bearer ${token}`
+      },
+    });
   }
 
   post(endpoint, body) {

@@ -1,10 +1,13 @@
+// @ts-check
 import { createSlice } from "@reduxjs/toolkit";
 import { loginUser, logoutUser } from "../thunks/authThunks";
 
+/** @type {import('../../types/auth.types').AuthState} */
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  auth: JSON.parse(localStorage.getItem("user")) || null,
   isLoggedIn: !!localStorage.getItem("user"),
-  role: JSON.parse(localStorage.getItem("user"))?.role || null,
+  isLoading: false,
+  error: null,
 };
 const authSlice = createSlice({
   name: "auth",
@@ -12,27 +15,32 @@ const authSlice = createSlice({
   reducers: {
     resetAuthState(state) {
       state.error = null;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.auth = action.payload;
         state.isLoggedIn = true;
-        state.role = action.payload.role;
+        state.isLoading = false;
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.error = action.payload;
-        state.user = null;
+        state.error = action.payload || null;
+        state.auth = null;
         state.isLoggedIn = false;
-        state.role = null;
+        state.isLoading = false;
       })
       .addCase(logoutUser.fulfilled, (state) => {
-        state.user = null;
+        state.auth = null;
         state.isLoggedIn = false;
-        state.role = null;
         state.error = null;
+        state.isLoading = false;
       });
   },
 });

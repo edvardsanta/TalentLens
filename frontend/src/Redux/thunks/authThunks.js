@@ -14,15 +14,18 @@ const authService = configureAuthService(
       : undefined,
   },
 );
+
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (credentials, { rejectWithValue }) => {
     try {
-      var user = await authService.login(credentials);
-      localStorage.setItem("user", JSON.stringify(user));
-      return user;
+      const response = await authService.login(credentials);
+      localStorage.setItem("user", JSON.stringify(response));
+      return response;
     } catch (error) {
-      return rejectWithValue(error.message);
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      return rejectWithValue(errorMessage);
     }
   },
 );

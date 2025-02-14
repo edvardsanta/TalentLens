@@ -15,15 +15,12 @@ export class DefaultAuthStrategy {
       });
 
       if (!response.ok) {
-        console.log(`error code: ${response?.status}`);
-        console.log(response);
         throw new Error("Authentication failed");
       }
 
       const user = await response.json();
       return user;
     } catch (error) {
-      console.log(error.lineNumber);
       logger.logError(error, {
         functionName: "authenticate",
         context: "DefaultAuthStrategy.authenticate",
@@ -42,6 +39,7 @@ export class DefaultAuthStrategy {
       //   },
       // });
       return null;
+      // eslint-disable-next-line no-unreachable
     } catch (error) {
       logger.logError(error, { Context: "DefaultAuthStrategy.logout" });
       throw new Error("Logout failed");
@@ -50,8 +48,6 @@ export class DefaultAuthStrategy {
 
   async register({ username, password, email }) {
     try {
-      console.log("Registering user:", { username, password, email });
-      console.log("Registering user in", this.apiUrl + "/register");
       const response = await fetch(`${this.apiUrl}/register`, {
         method: "POST",
         headers: {
