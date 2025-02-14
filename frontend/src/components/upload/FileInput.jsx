@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
+import React from "react";
 /**
  * FileInput component for uploading files.
- * @param {Object} props - The props passed to the component.
+ * @param {object} props - The props passed to the component.
  * @param {Function} props.onFileChange - Function to handle file change event.
- * @returns {JSX.Element} FileInput component.
+ * @returns {React.JSX.Element} FileInput component.
  */
 const FileInput = ({ onFileChange }) => {
   return (
