@@ -1,7 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerUser } from "@/Redux/thunks/authThunks";
 import { useNavigate } from "react-router-dom";
+
+/**
+ * RegistrationForm component for user registration.
+ * @returns {React.JSX.Element} The rendered registration form.
+ */
 function RegistrationForm() {
   const [formData, setFormData] = useState({
     username: "",
@@ -88,5 +93,4 @@ function RegistrationForm() {
     </div>
   );
 }
-
 export default RegistrationForm;

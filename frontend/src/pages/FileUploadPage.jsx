@@ -5,10 +5,14 @@ import FileList from "@/components/upload/FileUploadList";
 import FileUploadService from "@/services/FileUploadService";
 import { useSelector } from "react-redux";
 import { AlertCircle } from "lucide-react";
-
+import { useErrorLogging } from "@/hooks/useErrorLogging";
+/**
+ * FileUploadPage component for handling file uploads.
+ * @returns {React.JSX.Element} The rendered FileUploadPage component.
+ */
 function FileUploadPage() {
   const MAX_FILES = import.meta.env.VITE_MAXFILES_UPLOAD || 10;
-  const FILESIZE_MAX = 10 * 1024 * 1024; // 10MB
+  const FILESIZE_MAX = 10 * 1024 * 1024;
   const ALLOWED_TYPES = [
     "image/jpeg",
     "image/png",
@@ -23,9 +27,9 @@ function FileUploadPage() {
   const [fileContents, setFileContents] = useState([]);
   const [error, setError] = useState("");
   const [isDragging, setIsDragging] = useState(false);
-
+  const { handleError } = useErrorLogging();
   const fileUploadService = new FileUploadService();
-  const userToken = useSelector((state) => state.auth.user?.token);
+  const userToken = useSelector((state) => state.auth.auth?.token);
 
   const validateFile = useCallback((file) => {
     const errors = [];
@@ -81,7 +85,6 @@ function FileUploadPage() {
       setUploadStatus(newUploadStatus);
       setFiles(newFiles);
 
-      // Initialize empty file contents
       const newFileContents = selectedFiles.map((file) => ({
         filename: file.name,
         personName: "",
@@ -135,33 +138,27 @@ function FileUploadPage() {
     );
 
     try {
-      const uploadPromises = validFiles.map(async ({ file }) => {
-        const formData = new FormData();
-        formData.append("file", file);
-        return await fileUploadService.uploadFile(formData, userToken);
-      });
-
-      const results = await Promise.all(uploadPromises);
+      const results = await fileUploadService.uploadFiles(
+        validFiles,
+        userToken,
+      );
 
       setUploadStatus((prevStatus) =>
         prevStatus.map((status, index) => ({
           ...status,
-          status: results[index].success ? "Uploaded" : "Failed",
-          isError: !results[index].success,
+          status: results[index].successIdentified ? "Uploaded" : "Failed",
+          isError: !results[index].successIdentified,
         })),
       );
 
-      // Update file contents with the response data
-      if (results.some((r) => r.success)) {
-        const successfulUploads = results
-          .filter((r) => r.success)
-          .map((r) => r.data);
+      if (results.some((r) => r.successIdentified)) {
+        const successfulUploads = results.filter((r) => r.successIdentified);
 
         setFileContents((prev) => {
           const updated = [...prev];
           successfulUploads.forEach((upload) => {
             const index = updated.findIndex(
-              (f) => f.filename === upload.filename,
+              (f) => f.fileName === upload.fileName,
             );
             if (index !== -1) {
               updated[index] = upload;
@@ -171,7 +168,10 @@ function FileUploadPage() {
         });
       }
     } catch (err) {
-      console.error("Upload failed:", err);
+      handleError(err, {
+        component: "FileUploadPage",
+        function: "handleFileUpload",
+      });
       setError("Upload failed. Please try again.");
       setUploadStatus(
         validFiles.map(({ file }) => ({
@@ -241,5 +241,4 @@ function FileUploadPage() {
     </div>
   );
 }
-
 export default FileUploadPage;

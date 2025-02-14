@@ -1,4 +1,4 @@
-import React, { useState, lazy } from "react";
+import React from "react";
 import { routes } from "@/routes/routes";
 import PublicRoute from "@/routes/PublicRoute";
 import ProtectedRoute from "@/routes/ProtectedRoute";
@@ -12,17 +12,11 @@ import {
 } from "react-router-dom";
 import Header from "@/components/ui/Header";
 
-const SlowComponent = lazy(
-  () =>
-    new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(import("@/pages/FileUploadPage"));
-      }, 500);
-    }),
-);
+/**
+ * Main App component that handles routing and layout
+ * @returns {React.JSX.Element} The rendered App component
+ */
 function App() {
-  // Preload components based on user authentication status
-
   return (
     <div className="min-h-screen flex flex-col">
       <Router>
@@ -65,5 +59,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
