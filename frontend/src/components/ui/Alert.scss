@@ -1,0 +1,49 @@
+.alert {
+  $self: &;
+  position: relative;
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+
+  &--with-icon {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &--exiting {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  &__icon {
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    margin-top: 0.125rem;
+    width: 1em;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  // Variant-specific icon colors - using the alert's text color
+  &-success &__icon {
+    color: inherit;
+  }
+
+  &-danger &__icon {
+    color: inherit;
+  }
+
+  &-warning &__icon {
+    color: inherit;
+  }
+
+  &-info &__icon {
+    color: inherit;
+  }
+
+  &-primary &__icon {
+    color: inherit;
+  }
+}
