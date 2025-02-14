@@ -5,7 +5,7 @@ import { logoutUser } from "@/Redux/thunks/authThunks";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.auth);
 
   const handleLogout = async () => {
     await dispatch(logoutUser()).unwrap();
