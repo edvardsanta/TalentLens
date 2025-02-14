@@ -78,7 +78,7 @@ importers:
         specifier: ^14.5.2
         version: 14.6.1(@testing-library/dom@10.4.0)
       "@types/react":
-        specifier: ^18.2.43
+        specifier: ^18.3.18
         version: 18.3.18
       "@types/react-dom":
         specifier: ^18.2.17
@@ -116,6 +116,9 @@ importers:
       sass:
         specifier: ^1.83.4
         version: 1.83.4
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
       vite:
         specifier: ^5.2.10
         version: 5.4.14(@types/node@22.13.1)(sass@1.83.4)
@@ -4727,6 +4730,14 @@ packages:
       }
     engines: { node: ">= 0.4" }
 
+  typescript@5.7.3:
+    resolution:
+      {
+        integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==,
+      }
+    engines: { node: ">=14.17" }
+    hasBin: true
+
   ufo@1.5.4:
     resolution:
       {
@@ -7931,6 +7942,8 @@ snapshots:
       is-typed-array: 1.1.15
       possible-typed-array-names: 1.0.0
       reflect.getprototypeof: 1.0.10
+
+  typescript@5.7.3: {}
 
   ufo@1.5.4: {}
 

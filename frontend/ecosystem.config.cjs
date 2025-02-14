@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 module.exports = {
   apps: [
     {
@@ -24,11 +25,11 @@ module.exports = {
         PM2_SERVE_PORT: 3000,
         PM2_SERVE_SPA: "true",
       },
-      log_file: "/app/logs/output.log", // Path for standard logs
-      error_file: "/app/logs/error.log", // Path for error logs
-      out_file: "/app/logs/output.log", // Redirect output logs
-      merge_logs: true, // Merge all logs into a single file (optional)
-      time: true, // Add timestamp to logs
+      log_file: "/app/logs/output.log",
+      error_file: "/app/logs/error.log",
+      out_file: "/app/logs/output.log",
+      merge_logs: true,
+      time: true,
     },
   ],
 };
