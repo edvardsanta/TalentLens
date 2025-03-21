@@ -105,7 +105,7 @@ def generate_env_file_from_app_settings(project_name, config):
     csv_settings = config.get("CsvSettings", {})
     training_data_path = csv_settings.get("TrainingDataPath", "")
     if training_data_path:
-        env_content += f"CSV_SETTINGS__TRAININGDATAPATH={training_data_path}\n"
+        env_content += f"CSVSETTINGS__TRAININGDATAPATH={training_data_path}\n"
 
     # Write the content to the .env file
     with open(env_file_path, "w") as env_file:
