@@ -27,3 +27,4 @@ dist-ssr
 .env.ranktext
 .env.textextraction
 .env.upload_files
+config.db
