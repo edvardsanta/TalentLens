@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .env
+.env.ranktext
+.env.textextraction
+.env.upload_files

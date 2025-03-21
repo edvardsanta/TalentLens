@@ -1,0 +1,111 @@
+services:
+  platform-service:
+    build:
+      context: ./platform-service
+      dockerfile: Dockerfile
+    container_name: platform_service
+    ports:
+      - "8080:8080"
+    networks:
+      - platform-network
+
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    container_name: platform_frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - platform-network
+
+  uploadfiles:
+    build:
+      context: .
+      dockerfile: UploadFiles/Application/UploadFiles/Dockerfile.prod
+    container_name: upload_files_services
+    ports:
+      - "8081:8080"
+    depends_on:
+      - rabbitmq
+      - mongodb
+    networks:
+      - platform-network
+    env_file:
+      - .env.upload_files
+
+  textextraction:
+    build:
+      context: .
+      dockerfile: UploadFiles/TextConsumer/Dockerfile.prod
+    container_name: text_extraction
+    ports:
+      - "8082:8080"
+    depends_on:
+      - mongodb
+      - rabbitmq
+    networks:
+      - platform-network
+    env_file:
+      - .env.textextraction
+
+  ranktext:
+    build:
+      context: .
+      dockerfile: UploadFiles/RankText/Dockerfile.prod
+    container_name: rank_text
+    ports:
+      - "8083:8080"
+    depends_on:
+      - mongodb
+      - rabbitmq
+    networks:
+      - platform-network
+    env_file:
+      - .env.ranktext
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - platform-network
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo_express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    ports:
+      - "8084:8081"
+    depends_on:
+      - mongodb
+    networks:
+      - platform-network
+
+  rabbitmq:
+    image: rabbitmq:4.0-management-alpine
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - platform-network
+
+networks:
+  platform-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
