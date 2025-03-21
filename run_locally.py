@@ -161,6 +161,9 @@ def generate_platform_service_env():
 
 projects = {
     "ranktext": {
+        "CsvSettings": {
+            "TrainingDataPath": "./soft_hard_skills.csv"
+        },
         "RabbitMq": {
             "Uri": "rabbitmq",
             "QueueName": "rank-text-queue",
