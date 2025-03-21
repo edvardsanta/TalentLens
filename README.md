@@ -31,9 +31,9 @@ git clone --recurse-submodules https://github.com/edvardsanta/TalentLens.git
 ### Step 2: Build and Run the Containers
 To generate the necessary environment variables, run the Python script:
 This script will:
-    - Initialize a SQLite database (config.db) to store some configuration.
-    - Ask for a JWT Secret if it’s not already in the database.
-    - Generate .env files for the backend and frontend
+- Initialize a SQLite database (config.db) to store some configuration.
+- Ask for a JWT Secret if it’s not already in the database.
+- Generate .env files for the backend and frontend
 ``` bash
 python ./run_locally.py
 ```
@@ -47,8 +47,8 @@ Once the containers are up and running:
 - Go to the application and register a user.
 - Do login
 
-### Step 5: Use the Application
-- Use the application as you would normally try with multiples resume and see if it is soft or hard skills.
+Step 5: Use the Application
+- Use the application to upload multiple resumes and see whether the skills identified in the resumes are categorized as soft skills or hard skills.
 
 
 ## Tech Stack
