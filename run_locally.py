@@ -6,6 +6,7 @@ DB_FILE = "config.db"
 TABLE_NAME = "settings"
 JWT_SECRET_KEY = "jwt_secret"
 
+
 def init_db():
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
@@ -21,7 +22,6 @@ def init_db():
     conn.close()
 
 
-# Function to save a value in the database
 def save_to_db(key, value):
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
@@ -32,7 +32,6 @@ def save_to_db(key, value):
     conn.close()
 
 
-# Function to retrieve a value from the database
 def get_from_db(key):
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
@@ -42,14 +41,13 @@ def get_from_db(key):
     return result[0] if result else None
 
 
-# Initialize DB
 init_db()
 
-# Retrieve JWT secret or ask user
 jwt_secret = get_from_db(JWT_SECRET_KEY)
 if not jwt_secret:
     jwt_secret = input("Enter the JWT Secret: ").strip()
     save_to_db(JWT_SECRET_KEY, jwt_secret)
+
 
 # Function to generate the environment file for a project
 def generate_env_file_from_app_settings(project_name, config):
@@ -151,7 +149,9 @@ def generate_platform_service_env():
         "OTEL_SDK_DISABLED": "true",
     }
 
-    env_content = "\n".join([f"{key}={value}" for key, value in platform_config.items()])
+    env_content = "\n".join(
+        [f"{key}={value}" for key, value in platform_config.items()]
+    )
 
     with open(filename, "w") as env_file:
         env_file.write(env_content + "\n")
@@ -208,7 +208,6 @@ projects = {
     },
 }
 
-# Generate .env files for each project
 if __name__ == "__main__":
     generate_frontend_env()
     for project_name, config in projects.items():
