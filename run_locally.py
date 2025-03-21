@@ -102,6 +102,11 @@ def generate_env_file_from_app_settings(project_name, config):
         if key not in ["RabbitMq", "MongoDb", "Logging", "Jwt-Secret"]:
             env_content += f"{key.upper()}={value}\n"
 
+    csv_settings = config.get("CsvSettings", {})
+    training_data_path = csv_settings.get("TrainingDataPath", "")
+    if training_data_path:
+        env_content += f"CSV_SETTINGS__TRAININGDATAPATH={training_data_path}\n"
+
     # Write the content to the .env file
     with open(env_file_path, "w") as env_file:
         env_file.write(env_content)
